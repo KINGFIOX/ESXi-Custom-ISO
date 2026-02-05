@@ -12,8 +12,7 @@ $TOKEN = ""
 # https://support.broadcom.com/group/ecx/productdownloads?subfamily=Flings&freeDownloads=true
 
 # Define Fling source file & link
-$flingUrl = "https://raw.githubusercontent.com/itiligent/ESXi-Custom-ISO/main/8-updates/" # Fling archive in case they disappear again
-$usbFling = "ESXi803-VMKUSB-NIC-FLING-76444229-component-24179899.zip"
+$rtl8125 = "VMware-Re-Driver_1.101.01-5vmw.800.1.0.20613240.zip"
 
 # Nominate a custom esxi depot zip file and link:
 # (Run this script in the same direcrtory as file $manualUpdate1 to build locally without downloading)
@@ -80,20 +79,18 @@ echo ""
 echo "Finished retrieving $imageProfile"
 echo ""
 
-if (!(Test-Path $usbFling)){Invoke-WebRequest -Method "GET" $flingUrl$($usbFling) -OutFile $($usbFling)}
-
 echo ""
 echo "Adding extra packages to the local depot"
 echo ""
 
 Add-EsxSoftwareDepot "$($imageProfile).zip"
-Add-EsxSoftwareDepot $usbFling
+Add-EsxSoftwareDepot $rtl8125
 
 echo ""
 echo "Creating a custom profile" 
 echo ""
 
-$newProfileName = $($imageProfile.Replace("standard", "usbnic"))
+$newProfileName = $($imageProfile.Replace("standard", "rtl8125"))
 $newProfile = New-EsxImageProfile -CloneProfile $imageProfile -name $newProfileName -Vendor "Itiligent"
 Set-EsxImageProfile -ImageProfile $newProfile -AcceptanceLevel CommunitySupported
 
@@ -101,7 +98,7 @@ echo ""
 echo "Injecting extra packages into the custom profile"
 echo ""
 
-Add-EsxSoftwarePackage -ImageProfile $newProfile -SoftwarePackage "vmkusb-nic-fling" -Force
+Add-EsxSoftwarePackage -ImageProfile $newProfile -SoftwarePackage "if-re" -Force
 
 echo ""
 echo "Exporting the custom profile to an ISO..."

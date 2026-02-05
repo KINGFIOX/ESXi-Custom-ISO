@@ -91,3 +91,9 @@ https://developer.broadcom.com/tools/vmware-powercli/12.7.0
 - VMware Community Flings have been moved into the Broadcom universe at https://community.broadcom.com/flings/home
 - The ESXi 6.7 script's Zimaboard RTL8168 NIC drivers were sourced from https://vibsdepot.v-front.de
 - Optional RTL 8125 2.5GBe vibs for use with ESXi 6.7 were sourced from https://github.com/mcr-ksh/r8125-esxi
+
+# README
+
+我参考了这个 [教程](https://cosci.de/en/server-en/install-realtek-network-driver-on-vmware-esxi-8-0-3-how-to-enable-rtl8125-rtl8111-rtl8126-and-rtl8127/) 下载了 [博通提供的rtl8125驱动](https://support.broadcom.com/group/ecx/productfiles?subFamily=Flings&displayGroup=Realtek%20Network%20Driver%20for%20ESXi&release=1.101.01&os=&servicePk=&language=EN&freeDownloads=true) ，也就是 `./VMware-Re-Driver_1.101.01-5vmw.800.1.0.20613240.zip`
+
+我修改了 `./esxi8.ps1`, 并参照上面说明成功运行, 生成了 `ESXi-8.0U3g-24859861-rtl8125.iso`（已放到 Release 中）
